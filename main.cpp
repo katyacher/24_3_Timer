@@ -5,6 +5,12 @@
 #include <iomanip>
 
 
+void clear() {
+    // CSI[2J clears screen, CSI[H moves the cursor to top-left corner
+    // std::cout << u8"\033[2J\033[1;1H";
+    system("clear");
+}
+
 int main() {
     std::cout << "24.3 Timer" << std::endl;
 
@@ -23,7 +29,7 @@ int main() {
     stop_tm->tm_min += time_tm.tm_min;
 
     std::time_t stop_t = mktime(stop_tm);
-
+    clear();
     while(now_t != stop_t) {
         double d = std::difftime(stop_t,now_t);
         std::time_t diff = (std::time_t)d;
@@ -31,7 +37,7 @@ int main() {
         std::cout << std::put_time(timer,"%M:%S") << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));
         now_t = time(nullptr);
-        system("clear");
+        clear();
     }
     std::cout << "DING!DING!DING!" << std::endl;
     return 0;
